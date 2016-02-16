@@ -38,11 +38,11 @@ module Wit
     def initialize(hash)
       @raw = hash
       @msg_id = hash['msg_id']
-      @msg_body = hash['msg_body']
-      @intent = hash['outcome']['intent']
-      @confidence = hash['outcome']['confidence']
+      @msg_body = hash['_text']
+      @intent = hash['outcomes'][0]['intent']
+      @confidence = hash['outcomes'][0]['confidence']
       @entities = EntityCollection.new
-      hash['outcome']['entities'].each do |name, entity|
+      hash['outcomes'][0]['entities'].each do |name, entity|
         @entities.send(:"#{name}=", Entity.new(entity))
       end
     end
